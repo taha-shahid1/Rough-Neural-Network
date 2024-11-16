@@ -7,7 +7,7 @@ DATA_DIR = '/Users/tahashahid/Rough-Neural-Network/dataset'
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
-number_of_classes = 26
+number_of_classes = 3
 dataset_size = 200
 
 cap = cv2.VideoCapture(1)
