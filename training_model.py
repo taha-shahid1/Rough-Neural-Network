@@ -17,9 +17,9 @@ labelsTrain = labelsTrain.astype(np.int32)
 
 
 model = Sequential([
-    Dense(64, activation='relu', input_shape=(42,)),     # Input layer, which uses relu. If the output of the function is positive, the function's output will remain unchanged. However, if it is negative, relu makes it 0
+    Dense(64, activation='relu', input_shape=(42,)),     # Input layer, with 64 neurons, which uses relu. If the output of the function is positive, the function's output will remain unchanged. However, if it is negative, relu makes it 0. In traditional activation functions like the sigmoid or tanh, gradients can become very small during backpropagation (especially in deep networks), making it hard to update the weights. This is the vanishing gradient problem. ReLU helps avoid this because its gradient is either 0 (for negative inputs) or 1 (for positive inputs), which makes updating weights easier (no extremely small values)
     Dropout(0.2),                                        # During training, dropout randomly sets a fraction of the neurons (0.20 of neurons here) in a layer to zero at each training step which forces the model to rely on different combinations of neurons and reduces its reliance on specific neurons
-    Dense(32, activation='relu'),                        # Hidden layer (where the processing happens)
+    Dense(32, activation='relu'),                        # Hidden layer with 32 neurons (where the processing happens)
     Dropout(0.2),
     Dense(3, activation='softmax')                       # Output layer, softmax means the outputs will be in the form of probabilities of which label the landmarks should belong to
 
@@ -43,7 +43,7 @@ early_stopping = tf.keras.callbacks.EarlyStopping(             # Prevents over-f
 model.fit(
     dataTrain, 
     labelsTrain, 
-    epochs=50,                                                 # An epoch is one complete pass through the entire training dataset by the model. During each epoch, the model processes all the training samples, computes the loss for each, and updates its parameters using the optimizer
+    epochs=50,                                                 # An epoch is one complete pass through the entire training dataset by the model. During each epoch, the model processes all the training samples, computes the loss for each, and updates the weights of the neurons using the optimizer
     batch_size=64,                                             # Number of training samples processed before updating each neurons weights in one iteration
     validation_split=0.2,
     callbacks=[early_stopping]
