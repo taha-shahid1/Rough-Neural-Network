@@ -34,7 +34,7 @@ for dir in os.listdir(DATA_DIR):
                     xCoord.append(x)
                     yCoord.append(y)
                 
-                # Then normalize and store them
+                # Then normalize and store them, as normalizing data scales input features to a smaller consistent range, improving training speed and preventing large values from dominating (preventing very high or very low weights being assigned to a neuron)
                 for i in range(len(landmarks.landmark)):
                     x = landmarks.landmark[i].x
                     y = landmarks.landmark[i].y
@@ -44,6 +44,8 @@ for dir in os.listdir(DATA_DIR):
             data.append(dataBuffer)
             labels.append(dir)
 
-picklerickfile = open('dataset.pickle', 'wb')
-pickle.dump({'labels': labels, 'data': data}, picklerickfile)
-picklerickfile.close()
+
+# Stores landmarks into a binary file (picklefile) to be used in training the neural network
+picklefile = open('dataset.pickle', 'wb')
+pickle.dump({'labels': labels, 'data': data}, picklefile)
+picklefile.close()

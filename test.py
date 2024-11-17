@@ -11,7 +11,7 @@ mpHands = mp.solutions.hands
 hands = mpHands.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.3)
 
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -44,13 +44,13 @@ while cap.isOpened():
 
             
             dataBuffer = np.array(dataBuffer).reshape(1, -1)
-            predictions = model.predict(dataBuffer, verbose=0)
-            predicted_class = np.argmax(predictions[0])
-            confidence = predictions[0][predicted_class]
+            predictions = model.predict(dataBuffer, verbose=0)                   # Returns a list containing probabilities of what label the provided data (landmarks) could belong to
+            predictedLabel = np.argmax(predictions[0])                           # Chooses the label with the highest probability 
+            confidence = predictions[0][predictedLabel]                       
             
             
             cv2.putText(frame, 
-                       f"Class: {predicted_class} Conf: {confidence:.2f}", 
+                       f"Class: {predictedLabel} Conf: {confidence:.2f}", 
                        (10, 30), 
                        cv2.FONT_HERSHEY_SIMPLEX, 
                        1, 
